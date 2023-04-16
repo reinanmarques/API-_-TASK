@@ -1,16 +1,16 @@
 package com.tasks.mtasks.controllers;
 
-import java.net.URI;
-import java.util.List;
-import java.util.UUID;
-
+import com.tasks.mtasks.dto.TaskDto;
+import com.tasks.mtasks.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.tasks.mtasks.dto.TaskDto;
-import com.tasks.mtasks.services.TaskService;
+import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/tasks")
@@ -19,8 +19,8 @@ public class TaskController {
     private TaskService service;
 
     @GetMapping
-    public ResponseEntity<List<TaskDto>> fincAll() {
-        List<TaskDto> list = service.findAll();
+    public ResponseEntity<Page<TaskDto>> fincAll(Pageable pageable) {
+        Page<TaskDto> list = service.findAll(pageable);
         return ResponseEntity.ok(list);
     }
 
@@ -36,15 +36,22 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDto> fincById(@PathVariable UUID id){
+    public ResponseEntity<TaskDto> findById(@PathVariable UUID id) {
         TaskDto taskDto = service.findById(id);
         return ResponseEntity.ok(taskDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskDto> update(@PathVariable UUID id,  @RequestBody TaskDto dto){
+    public ResponseEntity<TaskDto> update(@PathVariable UUID id, @RequestBody TaskDto dto) {
         dto = service.Update(id, dto);
         return ResponseEntity.ok(dto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
