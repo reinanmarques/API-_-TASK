@@ -7,18 +7,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class Mapper {
 
-    public static TaskDto entityToDTO(Task entity) {
+    public static TaskDto toDTO(Task entity) {
         return new TaskDto(entity);
     }
 
-    public static Task DTOtoEntity(TaskDto dto) {
+    public static void toEntity(TaskDto dto, Task entity) {
+        entity.setTitle(dto.getTitle());
+        entity.setDate(dto.getDate());
+        entity.setComplete(dto.isComplete());
+    }
+
+    public static Task toEntity(TaskDto dto) {
         Task entity = new Task();
-        entity.setId(dto.getId());
         entity.setTitle(dto.getTitle());
         entity.setDate(dto.getDate());
         entity.setComplete(dto.isComplete());
         return entity;
     }
-
-
 }

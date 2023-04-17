@@ -43,7 +43,7 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDto> update(@PathVariable UUID id, @RequestBody TaskDto dto) {
-        dto = service.Update(id, dto);
+        dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
 

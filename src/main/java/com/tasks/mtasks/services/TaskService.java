@@ -10,6 +10,6 @@ public interface TaskService {
     public Page<TaskDto> findAll(Pageable pageable);
     public TaskDto save(TaskDto taskDto);
     public TaskDto findById(UUID id);
-    public TaskDto Update(UUID id, TaskDto taskDto);
+    public TaskDto update(UUID id, TaskDto taskDto);
     public void delete(UUID id);
 }
